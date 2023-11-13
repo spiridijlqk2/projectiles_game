@@ -41,7 +41,7 @@ function animate() {
   animationId = requestAnimationFrame(animate);
   ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  player.draw();
+  player.update();
   for (let index = particles.length - 1; index >= 0; index--) {
     const particle = particles[index];
     if (particle.alpha <= 0) {
@@ -123,23 +123,12 @@ function animate() {
 }
 
 addEventListener("click", (event) => {
-  const angle = Math.atan2(
-    event.clientY - canvas.height / 2,
-    event.clientX - canvas.width / 2,
-  );
+  const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x);
   const velocity = {
     x: Math.cos(angle) * 6,
     y: Math.sin(angle) * 6,
   };
-  projectiles.push(
-    new Projectile(
-      player.x + (player.radius * velocity.x) / 6,
-      player.y + (player.radius * velocity.y) / 6,
-      5,
-      "white",
-      velocity,
-    ),
-  );
+  projectiles.push(new Projectile(player.x, player.y, 5, "white", velocity));
 });
 
 //restart game
@@ -171,4 +160,21 @@ startButtonEl.addEventListener("click", () => {
       startModalEl.style.display = "none";
     },
   });
+});
+
+window.addEventListener("keydown", (event) => {
+  switch (event.key) {
+    case "ArrowRight":
+      player.velocity.x += 1;
+      break;
+    case "ArrowUp":
+      player.velocity.y -= 1;
+      break;
+    case "ArrowLeft":
+      player.velocity.x -= 1;
+      break;
+    case "ArrowDown":
+      player.velocity.y += 1;
+      break;
+  }
 });
