@@ -5,6 +5,7 @@ class Player extends Circle {
       x: 0,
       y: 0,
     };
+    this.powerUp;
   }
 
   update() {
