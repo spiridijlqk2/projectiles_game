@@ -228,7 +228,7 @@ function animate() {
           });
           //change background particle colors
           backgroundParticles.forEach((backgroundParticle) => {
-            gsap.to(backgroundParticle, {
+            gsap.set(backgroundParticle, {
               color: "white",
               alpha: 1,
             });
